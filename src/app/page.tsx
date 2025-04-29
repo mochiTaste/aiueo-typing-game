@@ -10,10 +10,18 @@ export default function Home() {
             <img src="/frog.png" alt="logo" className="w-64" />
             <Link
                 href="/typing/aiueo"
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg text-xl hover:bg-blue-600"
+                className="px-6 py-3 rounded-xl bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition"
             >
                 あいうえお
             </Link>
+            <Link
+                href="/typing/kakikukeko"
+                className="px-6 py-3 rounded-xl bg-purple-600 text-white text-lg font-semibold hover:bg-purple-700 transition"
+            >
+                かきくけこ
+            </Link>
+
+
         </main>
     );
 }
