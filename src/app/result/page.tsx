@@ -1,8 +1,9 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 
-export default function ResultPage() {
+function ResultPageContent() {
     const params = useSearchParams();
     const mistakes = params.get("mistakes");
     const time = params.get("time");
@@ -42,5 +43,13 @@ export default function ResultPage() {
                 </button>
             </div>
         </main>
+    );
+}
+
+export default function ResultPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResultPageContent />
+        </Suspense>
     );
 }
