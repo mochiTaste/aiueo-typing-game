@@ -10,6 +10,7 @@ function ResultPageContent() {
     const router = useRouter();
 
     const timeInSeconds = time ? (Number(time) / 1000).toFixed(2) : "0.00";
+    const from = params.get("from") || "typing/aiueo"; // fallback付き
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4 text-gray-800">
@@ -37,7 +38,7 @@ function ResultPageContent() {
                 </button>
                 <button
                     className="px-5 py-2 rounded-xl bg-green-600 text-white font-medium text-base hover:bg-green-700 transition"
-                    onClick={() => router.push("/typing/aiueo")}
+                    onClick={() => router.push(`/${from}`)}
                 >
                     もう一度
                 </button>

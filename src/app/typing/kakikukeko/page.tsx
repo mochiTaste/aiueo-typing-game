@@ -14,6 +14,9 @@ export default function TypingPage() {
     const [chars, setChars] = useState<string[]>([]);
     const [currentChar, setCurrentChar] = useState<string>("");
     const [inputBuffer, setInputBuffer] = useState("");
+    const [isPerfect, setIsPerfect] = useState(false);
+    const perfectRef = useRef<HTMLAudioElement | null>(null);
+
 
     const bgmRef = useRef<HTMLAudioElement | null>(null);
     const seRef = useRef<HTMLAudioElement | null>(null);
@@ -66,11 +69,25 @@ export default function TypingPage() {
                     const nextIndex = index + 1;
                     if (nextIndex >= chars.length) {
                         const endTime = Date.now();
-                        if (bgmRef.current) {
-                            bgmRef.current.pause();
-                            bgmRef.current.currentTime = 0;
+
+                        if (mistakes === 0) {
+                            setIsPerfect(true);
+                            if (perfectRef.current) {
+                                perfectRef.current.currentTime = 0;
+                                perfectRef.current.play().catch((e) => {
+                                    console.warn("perfect.mp3 再生失敗:", e.message);
+                                });
+                            }
+                            setTimeout(() => {
+                                router.push(`/result?mistakes=0&time=${endTime - (startTime || 0)}&from=typing/kakikukeko`);
+                            }, 2000);
+                        } else {
+                            if (bgmRef.current) {
+                                bgmRef.current.pause();
+                                bgmRef.current.currentTime = 0;
+                            }
+                            router.push(`/result?mistakes=${mistakes}&time=${endTime - (startTime || 0)}&from=typing/kakikukeko`);
                         }
-                        router.push(`/result?mistakes=${mistakes}&time=${endTime - (startTime || 0)}`);
                     } else {
                         setIndex(nextIndex);
                         setCurrentChar(chars[nextIndex]);
@@ -96,6 +113,13 @@ export default function TypingPage() {
 
     return (
         <main className="flex flex-col items-center justify-center min-h-screen text-center bg-white px-4 text-gray-800">
+            {isPerfect && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white z-50">
+                    <h2 className="text-5xl font-bold text-green-600 drop-shadow-md animate-pulse">
+                        ノーミス!! 🎉
+                    </h2>
+                </div>
+            )}
             <div className="mb-8">
                 <div className="text-8xl sm:text-9xl font-bold tracking-tight drop-shadow-md bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-600 bg-clip-text text-transparent">
                     {currentChar}
@@ -111,8 +135,11 @@ export default function TypingPage() {
                 </div>
             </div>
 
+
             <audio ref={bgmRef} src="/game_bgm.mp3" />
             <audio ref={seRef} src="/typing_sound.mp3" />
+            <audio ref={perfectRef} src="/perfect.mp3" />
+
         </main>
     );
 }
