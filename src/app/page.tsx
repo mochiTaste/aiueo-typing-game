@@ -21,6 +21,11 @@ export default function Home() {
                 かきくけこ
             </Link>
 
+            <p className="text-sm text-gray-400 mt-12">
+                © 2025 Kaeroute / 勝浦友之. All rights reserved.
+            </p>
+
+
 
         </main>
     );
