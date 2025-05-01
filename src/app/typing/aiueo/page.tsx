@@ -125,9 +125,7 @@ export default function TypingPage() {
 
             <div className="mb-8">
 
-                <div className="text-8xl sm:text-9xl font-bold tracking-tight drop-shadow-md
-                  bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600
-                  bg-clip-text text-transparent">
+                <div className="text-8xl sm:text-9xl font-bold tracking-tight drop-shadow-md bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-600 bg-clip-text text-transparent">
                     {currentChar}
                 </div>
                 <div className="text-xl text-gray-600 mt-4 uppercase">

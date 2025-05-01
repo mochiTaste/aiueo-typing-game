@@ -11,12 +11,24 @@ function ResultPageContent() {
 
     const timeInSeconds = time ? (Number(time) / 1000).toFixed(2) : "0.00";
     const from = params.get("from") || "typing/aiueo"; // fallback付き
+    function getTypingLabel(from: string): string {
+        switch (from) {
+            case "typing/kakikukeko":
+                return "かきくけこ";
+            case "typing/aiueo":
+            default:
+                return "あいうえお";
+        }
+    }
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4 text-gray-800">
             <h1 className="text-4xl font-semibold tracking-tight mb-6">
                 結果発表 🎉
             </h1>
+            <h2 className="text-lg text-gray-500 mb-4">
+                {getTypingLabel(from)}
+            </h2>
 
             <div className="text-lg sm:text-xl space-y-2 mb-8">
                 <p>
