@@ -13,9 +13,36 @@ function ResultPageContent() {
     const from = params.get("from") || "typing/aiueo"; // fallback付き
     function getTypingLabel(from: string): string {
         switch (from) {
+            case "typing/aiueo":
+                return "あいうえお";
             case "typing/kakikukeko":
                 return "かきくけこ";
-            case "typing/aiueo":
+            case "typing/sasisuseso":
+                return "さしすせそ";
+            case "typing/tatituteto":
+                return "たちつてと";
+            case "typing/naninuneno":
+                return "なにぬねの";
+            case "typing/hahihuheho":
+                return "はひふへほ";
+            case "typing/mamimumemo":
+                return "まみむめも";
+            case "typing/rarirurero":
+                return "らりるれろ";
+            case "typing/yayuyowawo":
+                return "やゆよわを";
+            case "typing/gagigugego":
+                return "がぎぐげご";
+            case "typing/zajizuzezo":
+                return "ざじずぜぞ";
+            case "typing/dadidudedo":
+                return "だぢづでど";
+            case "typing/babibubebo":
+                return "ばびぶべぼ";
+            case "typing/papopupepo":
+                return "ぱぴぷぺぽ";
+            case "typing/lalilulelo":
+                return "ぁぃぅぇぉ";
             default:
                 return "あいうえお";
         }
