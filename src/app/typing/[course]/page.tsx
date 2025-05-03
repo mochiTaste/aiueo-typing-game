@@ -43,7 +43,13 @@ export default function TypingPage() {
     }, [isStarted]);
 
     useEffect(() => {
+
         const handleKeyDown = (e: KeyboardEvent) => {
+            // Escapeでトップに戻る
+            if (e.key === "Escape") {
+                router.push("/");
+                return;
+            }
             if (!isStarted) {
                 if (e.code === "Space") {
                     e.preventDefault();
@@ -124,10 +130,19 @@ export default function TypingPage() {
                 <div className="text-base text-gray-400 lowercase">
                     {toRomaji(currentChar).toLowerCase()}
                 </div>
-                <div className="mt-4 text-sm text-gray-500">
-                    入力中: <span className="font-mono">{inputBuffer}</span>
-                </div>
+                {course !== "aiueo" && (
+                    <div className="mt-4 text-sm text-gray-500">
+                        入力中: <span className="font-mono">{inputBuffer}</span>
+                    </div>
+                )}
+
             </div>
+            <div className="fixed top-4 left-4 text-xs text-gray-400">
+                Escキーでメニューに戻る
+            </div>
+
+
+
 
             <audio ref={bgmRef} src="/game_bgm.mp3" />
             <audio ref={seRef} src="/typing_sound.mp3" />
