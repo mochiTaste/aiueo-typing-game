@@ -20,6 +20,7 @@ export default function TypingPage() {
     const bgmRef = useRef<HTMLAudioElement | null>(null);
     const seRef = useRef<HTMLAudioElement | null>(null);
     const perfectRef = useRef<HTMLAudioElement | null>(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const list = generateListByCourse(course as string);
@@ -79,6 +80,7 @@ export default function TypingPage() {
                         }
                     } else {
                         setIndex(nextIndex);
+                        setCurrentIndex(nextIndex);
                         setCurrentChar(chars[nextIndex]);
                         setInputBuffer("");
                     }
@@ -110,6 +112,9 @@ export default function TypingPage() {
                 </div>
             )}
             <div className="mb-8">
+                <div className="text-lg text-gray-500 mb-4">
+                    {Math.floor(currentIndex / 5) + 1}週目
+                </div>
                 <div className="text-8xl sm:text-9xl font-bold tracking-tight drop-shadow-md bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-600 bg-clip-text text-transparent">
                     {currentChar}
                 </div>

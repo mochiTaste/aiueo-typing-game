@@ -11,6 +11,15 @@ function ResultPageContent() {
 
     const timeInSeconds = time ? (Number(time) / 1000).toFixed(2) : "0.00";
     const from = params.get("from") || "typing/aiueo"; // fallback付き
+
+    // 例: 総打鍵数（1周5文字 × 10周 = 50）
+    const total = 50;
+    const mistakeCount = Number(mistakes) || 0;
+    const correctCount = total - mistakeCount;
+    const accuracy = ((correctCount / total) * 100).toFixed(1); // 小数点1位
+
+
+
     function getTypingLabel(from: string): string {
         switch (from) {
             case "typing/aiueo":
@@ -66,6 +75,11 @@ function ResultPageContent() {
                     <span className="font-medium text-gray-600">タイム：</span>
                     <span className="font-bold text-blue-600 text-xl">{timeInSeconds} 秒</span>
                 </p>
+                <p>
+                    <span className="font-medium text-gray-600">正答率：</span>
+                    <span className="font-bold text-green-600 text-xl">{accuracy}%</span>
+                </p>
+
             </div>
 
             <div className="flex gap-4">
