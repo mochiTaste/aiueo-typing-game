@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { generateBaList } from "@/utils/babibubebo";
+import { useParams, useRouter } from "next/navigation";
 import { toRomaji } from "@/utils/romajiMap";
+import { generateListByCourse } from "@/utils/listFactory";
 
 export default function TypingPage() {
+    const { course } = useParams();
     const router = useRouter();
     const [isStarted, setIsStarted] = useState(false);
     const [index, setIndex] = useState(0);
@@ -15,21 +16,20 @@ export default function TypingPage() {
     const [currentChar, setCurrentChar] = useState<string>("");
     const [inputBuffer, setInputBuffer] = useState("");
     const [isPerfect, setIsPerfect] = useState(false);
-    const perfectRef = useRef<HTMLAudioElement | null>(null);
-
 
     const bgmRef = useRef<HTMLAudioElement | null>(null);
     const seRef = useRef<HTMLAudioElement | null>(null);
+    const perfectRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
-        const list = generateBaList();
+        const list = generateListByCourse(course as string);
         setChars(list);
         setCurrentChar(list[0]);
 
         if (bgmRef.current) {
             bgmRef.current.loop = true;
         }
-    }, []);
+    }, [course]);
 
     useEffect(() => {
         if (isStarted && bgmRef.current) {
@@ -61,37 +61,26 @@ export default function TypingPage() {
             if (expected.startsWith(nextBuffer)) {
                 setInputBuffer(nextBuffer);
                 if (nextBuffer === expected) {
-                    if (seRef.current) {
-                        seRef.current.currentTime = 0;
-                        seRef.current.play();
-                    }
+                    seRef.current?.play();
 
                     const nextIndex = index + 1;
                     if (nextIndex >= chars.length) {
                         const endTime = Date.now();
-
                         if (mistakes === 0) {
                             setIsPerfect(true);
-                            if (perfectRef.current) {
-                                perfectRef.current.currentTime = 0;
-                                perfectRef.current.play().catch((e) => {
-                                    console.warn("perfect.mp3 再生失敗:", e.message);
-                                });
-                            }
+                            perfectRef.current?.play();
                             setTimeout(() => {
-                                router.push(`/result?mistakes=0&time=${endTime - (startTime || 0)}&from=typing/babibubebo`);
+                                router.push(`/result?mistakes=0&time=${endTime - (startTime || 0)}&from=typing/${course}`);
                             }, 2000);
                         } else {
-                            if (bgmRef.current) {
-                                bgmRef.current.pause();
-                                bgmRef.current.currentTime = 0;
-                            }
-                            router.push(`/result?mistakes=${mistakes}&time=${endTime - (startTime || 0)}&from=typing/babibubebo`);
+                            bgmRef.current?.pause();
+                            bgmRef.current!.currentTime = 0;
+                            router.push(`/result?mistakes=${mistakes}&time=${endTime - (startTime || 0)}&from=typing/${course}`);
                         }
                     } else {
                         setIndex(nextIndex);
                         setCurrentChar(chars[nextIndex]);
-                        setInputBuffer(""); // リセット
+                        setInputBuffer("");
                     }
                 }
             } else {
@@ -101,7 +90,7 @@ export default function TypingPage() {
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isStarted, index, chars, currentChar, mistakes, startTime, inputBuffer, router]);
+    }, [isStarted, index, chars, currentChar, mistakes, startTime, inputBuffer, course, router]);
 
     if (!isStarted) {
         return (
@@ -135,11 +124,9 @@ export default function TypingPage() {
                 </div>
             </div>
 
-
             <audio ref={bgmRef} src="/game_bgm.mp3" />
             <audio ref={seRef} src="/typing_sound.mp3" />
             <audio ref={perfectRef} src="/perfect.mp3" />
-
         </main>
     );
 }
