@@ -23,7 +23,7 @@ function ResultPageContent() {
                 return "たちつてと";
             case "typing/naninuneno":
                 return "なにぬねの";
-            case "typing/hahihuheho":
+            case "typing/hahifuheho":
                 return "はひふへほ";
             case "typing/mamimumemo":
                 return "まみむめも";
