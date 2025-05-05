@@ -1,4 +1,4 @@
-export function toRomaji(char: string): string {
+export function toRomaji(text: string): string {
     const map: Record<string, string> = {
         あ: "a", い: "i", う: "u", え: "e", お: "o",
         か: "ka", き: "ki", く: "ku", け: "ke", こ: "ko",
@@ -16,5 +16,8 @@ export function toRomaji(char: string): string {
         ぱ: "pa", ぴ: "pi", ぷ: "pu", ぺ: "pe", ぽ: "po",
         ぁ: "la", ぃ: "li", ぅ: "lu", ぇ: "le", ぉ: "lo",
     };
-    return map[char] || "";
+    return text
+        .split("")
+        .map(char => map[char] || "")
+        .join("");
 }

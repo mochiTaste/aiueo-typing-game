@@ -18,6 +18,7 @@ export const generateBaList = () => generateList(["ば", "び", "ぶ", "べ", "�
 export const generatePaList = () => generateList(["ぱ", "ぴ", "ぷ", "ぺ", "ぽ"]);
 export const generateLaList = () => generateList(["ぁ", "ぃ", "ぅ", "ぇ", "ぉ"]);
 
+
 export function generateListByCourse(course: string): string[] {
   switch (course) {
     case "aiueo":

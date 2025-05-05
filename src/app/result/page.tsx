@@ -1,5 +1,5 @@
 "use client";
-
+import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
 
@@ -17,6 +17,8 @@ function ResultPageContent() {
     const mistakeCount = Number(mistakes) || 0;
     const correctCount = total - mistakeCount;
     const accuracy = ((correctCount / total) * 100).toFixed(1); // 小数点1位
+
+
 
 
 
@@ -56,6 +58,24 @@ function ResultPageContent() {
                 return "あいうえお";
         }
     }
+
+    // 履歴保存（localStorage）ここで1回だけ実行
+    useEffect(() => {
+        const historyKey = "typingHistory";
+        const existingHistory = JSON.parse(localStorage.getItem(historyKey) || "[]");
+
+        const newRecord = {
+            course: getTypingLabel(from),
+            time: timeInSeconds,
+            mistakes: mistakeCount,
+            accuracy,
+            timestamp: new Date().toISOString(),
+        };
+
+        const updatedHistory = [...existingHistory, newRecord].slice(-100); // 最新100件に制限
+        localStorage.setItem(historyKey, JSON.stringify(updatedHistory));
+    }, []);
+
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4 text-gray-800">
