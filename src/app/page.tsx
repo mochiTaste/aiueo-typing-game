@@ -15,7 +15,7 @@ export default function Home() {
         }
         setTimeout(() => {
             router.push(path);
-        }, 400); // 音を鳴らしてから遷移
+        }, 250); // 音を鳴らしてから遷移
     };
 
     const btnBase = "px-6 py-3 rounded-xl text-white text-lg font-semibold text-white transition text-center";
