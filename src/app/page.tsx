@@ -49,12 +49,12 @@ export default function Home() {
     }, []);
     return (
         <main className="flex flex-col items-center justify-center min-h-screen gap-6">
-            <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text
         bg-gradient-to-r from-lime-500 to-emerald-500 drop-shadow-md">
-                あいうえおタイピング
+                あいうえおタイピング10
             </h1>
 
-            <img src="/frog.png" alt="logo" className="w-64"/>
+            <img src="/frog.png" alt="logo" className="w-32"/>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8">
                 <button onClick={() => handleClick("/typing/aiueo")}
